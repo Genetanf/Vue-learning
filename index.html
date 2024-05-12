@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="page.css">
+    <title>Document</title>
+</head>
+<body>
+    <!--基本使用-->
+    <div id="app">{{message}}</div>
+
+    <!--迴圈-->
+    <ul id="cycle">
+        <li v-for="item in list">{{item}}</li>
+    </ul>
+
+    <!--輸入資訊-->
+    <div id="text">
+        <input type="text" v-model="text" >
+        {{text}}
+    </div>
+
+    <!--事件-->
+    <div id="event">
+        <button  @click="testEvent">按我</button>
+    </div>
+
+    <!--條件式-->
+    <div id="show" v-if="isShow">{{speak}}</div>
+
+    <!-- v-bind -->
+    <div id="bind">
+        <input type="text" v-bind:value="text1"></input><br>
+        <input type="text" :value="text2"></input>
+    </div>
+
+    <div id="bindClass">
+        <!--class 樣式 class名稱綁定-->
+        <div v-bind:class="className">class樣式class名稱綁定</div>
+        <!-- style 樣式綁定-->
+        <div v-bind:style="customStyle"> style 樣式綁定</div>
+    </div>
+
+
+    <!--圖片綁定 image binding-->
+    <div id="image" >
+        <img v-bind:src="imageSrc" v-bind:style="typeStyle">
+    </div>
+    
+
+    <!-- v-for -->
+    <div id="forSource">
+        <ul>
+            <li v-for="(index, name) in scores" :key="index">
+                {{ name }}: {{ index }}
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- v-show -->
+    <div id="vshow">
+        <div v-for="(image,index) in imageList" v-bind:key="index" >
+            <!--圖片名稱-->
+            {{image.name}}<br>
+            <!--判斷要用哪種文字-->
+            {{image.is_sth===true?"這是照片":"不是照片"}}<br>
+            <!-- v-show 結果-->
+            <img v-bind:src="image.path" v-show="image.is_sth" v-bind:style="showclass">
+
+        </div>
+    </div>
+
+
+    <!-- $ref -->
+    <div id="refWay">
+        <div ref="reference"></div>
+    </div>
+
+    <!-- $el/$ref 操作-->
+    這裡是HTML頁面內容
+    <div id="elRef">
+        這裡是$el 範圍內<br>
+        寬度:{{el.width}}<br>
+        高度:{{el.height}}
+        <div ref="samplerefs" >
+            這裡是 $refs["samplerefs"]範圍內<br>
+            寬度:{{ref.width}}<br>
+            高度:{{ref.height}}
+        </div>
+    </div>
+
+
+
+    <!-- v-model -->
+    <!--sample 1-->
+    <div id="vmodel">
+        <input type="text" v-model="modelmessage"><br>
+        text: {{modelmessage}}
+    </div>
+
+    <!--sample 2-->
+    <div id="sample2">
+        <label><input type="checkbox" v-model="check" value="A">A</label>
+        <label><input type="checkbox" v-model="check" value="B">B</label>
+        <label><input type="checkbox" v-model="check" value="C">C</label><br>
+        Your decision:{{check}}
+    </div>
+
+    <!-- sample 3 -->
+    <div id="sample3">
+        <label v-for="(options,index) in options" :key="index">
+            <input type="checkbox" v-model="checkValue" :value="options.value">
+            {{options.text}}
+        </label><br>
+        Your decision: {{options.value}}
+    </div>
+
+    
+
+    <!-- v-on-->
+    <div id="vonv">
+        <button @click="onClick">Click</button>
+    </div>
+    
+    <!-- sample 2-->
+    <div id="onSample2">
+        <button v-on:click="onClick(2)">click</button><br>
+        總計:{{count}}
+    </div>
+
+    <!--sample 3-->
+    <div id="onSample3">
+        <input type="text" v-model="name">
+        <input type="number" v-model="age">
+        <button v-on:click="add">新增</button>
+        <br><br>
+        <ul>
+            <li v-for="(item, index) in list" :key="index">
+                姓名:{{item.name}}
+                年齡:{{item.age}}
+                <button v-on:click="remove(index)">移除</button>
+            </li>
+        </ul>
+    </div>
+
+    <!--sample 4-->
+    <div id="onSample4">
+        <input type="file" v-on:change="handleChange">
+        <img v-if="preview" :src="preview"  style="height:200px; width:200px ">
+    </div><br><br>
+
+
+
+    <!-- option-API computed 基礎-->
+    <div id="computedBasic">
+        {{fullName}}擁有{{haveMoney}},
+        使用了{{usedMoney}}後, 使用率為{{usage}}%。
+    </div>
+    <br>
+    <br>
+
+    <!-- computed 自定義組合變數的更新-->
+    <div id="computedSelf">
+        應考人數:{{examineNumber}}<br>
+        通過人數:{{passNumber}}<br>
+        合格率:{{passrate}}%。
+    </div>
+
+    <!-- 匯率計算 -->
+    <div id="rate">
+        台幣:<input type="text" v-model="ntd"><br>
+        日幣:{{jpn}}元<br>
+        美金:{{usd}}元<br>
+    </div>
+
+
+
+    <!-- v-watch -->
+    <!-- sample 1 -->
+    <div id="watch">
+        <select v-model="mainID">
+            <option value="">請選擇</option>
+            <option v-for="item in typeList" :value="item.id">{{item.name}}</option>
+        </select>
+        <select v-model="subID">
+            <option value="">請選擇</option>
+            <option v-for="item in currentSubList" :value="item.id">{{item.name}}</option>
+        </select>
+    </div>
+
+    <!--sample 2 -->
+    <div id="watchSample2">
+        <select v-model="selectProduct">
+            <option value="">請選擇</option>
+            <option v-for="item in products" :value="item.id">{{item.name}}</option>
+        </select>
+        <button @click="buy">購買</button>
+        <br><br>
+        購買產品:
+        <ul>
+            <li v-for="item in showList"> {{item.name}} - {{item.price}} 元</li>
+        </ul>
+        <br>
+        總價:{{totalPrice}}
+    </div>
+    
+    
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.4.23/dist/vue.global.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
